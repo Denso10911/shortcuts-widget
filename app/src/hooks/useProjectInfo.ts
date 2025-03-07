@@ -35,7 +35,11 @@ const useProjectInfo = () => {
    */
   const getProjectData = async (slug: string): Promise<void> => {
     try {
-      const resp = await fetch(`http://firebase/${slug}`);
+      const resp = await fetch(`https://us-central1-enso-95b84.cloudfunctions.net/getProject`, {
+        method: "POST",
+        body: JSON.stringify({ subdomain: slug }),
+      });
+      console.log(resp, "resp");
 
       // Check if the response is valid
       if (!resp.ok) {
