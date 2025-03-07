@@ -9,7 +9,11 @@ createRoot(document.getElementById("root")!).render(
     <BrowserRouter>
       <Routes>
         <Route
-          path="*"
+          path="/"
+          element={<App />}
+        />
+        <Route
+          path="/:slug"
           element={<App />}
         />
       </Routes>

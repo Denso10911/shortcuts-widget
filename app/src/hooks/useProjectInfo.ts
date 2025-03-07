@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useParams} from "react-router-dom";
 import { FirebaseProjectI } from "@/types/project";
 
 const useProjectInfo = () => {
-  const { pathname } = useLocation();
+  const { slug } = useParams()
+  console.log(slug, "slug");
+
   const [projectInfo, setProjectInfo] = useState<FirebaseProjectI | null>(null);
 
   /**
@@ -54,13 +56,11 @@ const useProjectInfo = () => {
   };
 
   useEffect(() => {
-    const slug = pathname.replace(/\//g, "");
-
     // Ensure we have a valid project name before making the request
     if (slug) {
       getProjectData(slug);
     }
-  }, [pathname]); // Re-run when pathname changes
+  }, [slug]); // Re-run when pathname changes
 
   return projectInfo; // Return project info to be used in components
 };
