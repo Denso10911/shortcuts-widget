@@ -2,8 +2,8 @@
   "trailingSlash": false,
   "rewrites": [
     {
-      "source": "/widget/(.*)",
-      "destination": "/index.html"
+      "source": "/widget/:path*",
+      "destination": "/:path*"
     }
   ]
 }

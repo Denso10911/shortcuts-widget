@@ -4,7 +4,6 @@ import { FirebaseProjectI } from "@/types/project";
 
 const useProjectInfo = () => {
   const { slug } = useParams()
-  console.log(slug, "slug");
 
   const [projectInfo, setProjectInfo] = useState<FirebaseProjectI | null>(null);
 
