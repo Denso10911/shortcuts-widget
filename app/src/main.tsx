@@ -16,6 +16,10 @@ createRoot(document.getElementById("root")!).render(
           path="/:slug"
           element={<App />}
         />
+        <Route
+          path="*"
+          element={<div>Empty page</div>}
+        />
       </Routes>
     </BrowserRouter>
   </StrictMode>,
