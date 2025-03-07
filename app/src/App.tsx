@@ -1,5 +1,5 @@
 import React, { ComponentProps, useMemo } from "react";
-import { useLocation} from "react-router-dom";
+import {Link, useLocation} from "react-router-dom";
 import Providers from "@/components/Providers";
 import { isAddress } from "viem";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
@@ -54,6 +54,7 @@ function App() {
 
         <ConnectButton />
       </div>
+      <Link to="/test-app">asd</Link>
 
       <div
         style={{
