@@ -1,15 +1,8 @@
 {
-  "trailingSlash": false,
-  "redirects": [
+  "rewrites": [
     {
-      "source": "/widget/:path*",
-      "destination": "/app/dist/index.html",
-      "statusCode": 200
-    },
-    {
-      "source": "/:path*",
-      "destination": "/app/dist/index.html",
-      "statusCode": 200
+      "source": "/(.*)",
+      "destination": "/app/dist/index.html"
     }
   ]
 }
