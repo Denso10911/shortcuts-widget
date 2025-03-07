@@ -2,7 +2,7 @@
   "trailingSlash": false,
   "rewrites": [
     {
-      "source": "/widget//(.*)",
+      "source": "/widget/(.*)",
       "destination": "/index.html"
     }
   ]
