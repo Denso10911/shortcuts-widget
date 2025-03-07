@@ -6,8 +6,15 @@
       "destination": "/:path*"
     },
     {
-      "source": "/(.*)",
+      "source": "/app/(.*)",
       "destination": "/app/dist/index.html"
+    }
+  ],
+  "redirects": [
+    {
+      "source": "/(.*)",
+      "destination": "/index.html",
+      "statusCode": 200
     }
   ]
 }
