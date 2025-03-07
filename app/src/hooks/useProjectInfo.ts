@@ -37,6 +37,9 @@ const useProjectInfo = () => {
     try {
       const resp = await fetch(`https://us-central1-enso-95b84.cloudfunctions.net/getProject`, {
         method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
         body: JSON.stringify({ subdomain: slug }),
       });
       console.log(resp, "resp");
