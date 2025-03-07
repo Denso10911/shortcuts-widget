@@ -1,5 +1,5 @@
 import React, { ComponentProps, useMemo } from "react";
-import {Router, Routes, useLocation} from "react-router-dom";
+import { useLocation} from "react-router-dom";
 import Providers from "@/components/Providers";
 import { isAddress } from "viem";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
