@@ -10,9 +10,6 @@ export default defineConfig(({ mode }) => {
   return {
     base: env.VITE_BASE_PATH,
     plugins: [react(), tsconfigPaths()],
-    server: {
-      historyApiFallback: true
-    },
     resolve: {
       alias: {
         "@": "/src",
