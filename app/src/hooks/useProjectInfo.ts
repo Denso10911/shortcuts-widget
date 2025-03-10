@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { useParams} from "react-router-dom";
 import { FirebaseProjectI } from "@/types/project";
 
 /**
@@ -51,20 +50,22 @@ const getProjectData = async (slug: string): Promise<FirebaseProjectI> => {
 };
 
 const useProjectInfo = () => {
-  const { slug } = useParams()
+  const hostname = window.location.hostname; // e.g., "sub.test.denys-heraymov.website"
+  const parts = hostname.split('.');
+  const subdomain = parts[0]; // "sub"
 
   const [projectInfo, setProjectInfo] = useState<FirebaseProjectI | null>(null);
 
   useEffect(() => {
-    if (slug) {
-     getProjectData(slug).then((data: FirebaseProjectI) => {
+    if (subdomain) {
+     getProjectData(subdomain).then((data: FirebaseProjectI) => {
        if (data?.name || data?.logo) {
          setProjectInfo(data);
          applyProjectInfoInDOM(data.name, data.logo);
        }
      });
     }
-  }, [slug]); // Re-run when pathname changes
+  }, [subdomain]); // Re-run when pathname changes
 
   return projectInfo; // Return project info to be used in components
 };
