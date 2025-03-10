@@ -50,9 +50,9 @@ const getProjectData = async (slug: string): Promise<FirebaseProjectI> => {
 };
 
 const useProjectInfo = () => {
-  const hostname = window.location.hostname; // e.g., "sub.test.denys-heraymov.website"
+  const hostname = window.location.hostname; // e.g., "sub.widget.denys-heraymov.website"
   const parts = hostname.split('.');
-  const subdomain = parts[0]; // "sub"
+  const subdomain = parts[0] + "." + parts[1]; // "sub.widget"
 
   const [projectInfo, setProjectInfo] = useState<FirebaseProjectI | null>(null);
 
