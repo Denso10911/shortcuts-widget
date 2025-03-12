@@ -25,7 +25,7 @@ const applyProjectInfoInDOM = (title?: string, logo?: string) => {
 
 /**
  * Fetches project data from Firebase using the project name extracted from the URL.
- * @param slug - The project name derived from the current pathname.
+ * @param slug - The project name derived from the current hostname.
  */
 const getProjectData = async (slug: string): Promise<FirebaseProjectI> => {
   try {
@@ -46,6 +46,7 @@ const getProjectData = async (slug: string): Promise<FirebaseProjectI> => {
 
   } catch (error) {
     console.error("Error fetching project data:", error);
+    throw error;
   }
 };
 
@@ -53,19 +54,40 @@ const useProjectInfo = () => {
   const hostname = window.location.hostname; // e.g., "sub.widget.denys-heraymov.website"
   const parts = hostname.split('.');
   const subdomain = parts[0] + "." + parts[1]; // "sub.widget"
+  const storageKey = `projectInfo_${subdomain}`;
 
   const [projectInfo, setProjectInfo] = useState<FirebaseProjectI | null>(null);
 
   useEffect(() => {
     if (subdomain) {
-     getProjectData(subdomain).then((data: FirebaseProjectI) => {
-       if (data?.name || data?.logo) {
-         setProjectInfo(data);
-         applyProjectInfoInDOM(data.name, data.logo);
-       }
-     });
+      // Try to retrieve cached project info from localStorage
+      const cachedData = localStorage.getItem(storageKey);
+      if (cachedData) {
+        try {
+          const parsedData: FirebaseProjectI = JSON.parse(cachedData);
+          setProjectInfo(parsedData);
+          applyProjectInfoInDOM(parsedData.name, parsedData.logo);
+          return; // Data found, skip fetching
+        } catch (error) {
+          console.error("Error parsing project info from localStorage:", error);
+          // If error occurs during parsing, clear the corrupted data
+          localStorage.removeItem(storageKey);
+        }
+      }
+
+      // If not in localStorage, fetch data from the API
+      getProjectData(subdomain).then((data: FirebaseProjectI) => {
+        if (data?.name || data?.logo) {
+          setProjectInfo(data);
+          applyProjectInfoInDOM(data.name, data.logo);
+          // Save fetched data to localStorage for later use
+          localStorage.setItem(storageKey, JSON.stringify(data));
+        }
+      }).catch((error) => {
+        console.error("Error in fetching project data:", error);
+      });
     }
-  }, [subdomain]); // Re-run when pathname changes
+  }, [subdomain]); // Re-run if subdomain changes
 
   return projectInfo; // Return project info to be used in components
 };
