@@ -1,4 +1,4 @@
-import React, { ComponentProps, useMemo } from "react";
+import React, {ComponentProps, useEffect, useMemo} from "react";
 import {useLocation} from "react-router-dom";
 import Providers from "@/components/Providers";
 import { isAddress } from "viem";
@@ -58,6 +58,38 @@ function App() {
       )
     }
   }
+
+  useEffect(() => {
+    const script = document.createElement("script")
+    script.src = "https://telegram.org/js/telegram-web-app.js?56"
+    script.defer = true
+    document.body.appendChild(script)
+
+    return () => {
+      document.body.removeChild(script)
+    }
+  }, [])
+
+  useEffect(() => {
+    const script = document.createElement("script")
+    script.src = "https://telegram.org/js/telegram-widget.js"
+    script.defer = true
+    document.body.appendChild(script)
+
+    return () => {
+      document.body.removeChild(script)
+    }
+  }, [])
+  useEffect(() => {
+    const script = document.createElement("script")
+    script.src = "https://telegram.org/js/widget-frame.js?63"
+    script.defer = true
+    document.body.appendChild(script)
+
+    return () => {
+      document.body.removeChild(script)
+    }
+  }, [])
 
   return (
     <Providers>
