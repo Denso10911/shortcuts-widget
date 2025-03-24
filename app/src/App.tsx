@@ -10,6 +10,17 @@ import logoUrl from "./logo_black_white.png";
 import "@rainbow-me/rainbowkit/styles.css";
 import useProjectInfo from "@/hooks/useProjectInfo";
 // import "./App.css";
+declare global {
+  interface Window {
+    Telegram: any
+    TWidgetLogin: {
+      auth: () => void
+    }
+    TelegramLoginWidget: {
+      dataOnauth: (user: any) => void
+    }
+  }
+}
 
 const EnsoApiKey = import.meta.env.VITE_ENSO_API_KEY;
 
@@ -37,6 +48,17 @@ function App() {
     return props;
   }, [location]);
 
+  const handleTelegramWidgetLogin = () => {
+    if (typeof window !== "undefined") {
+      window.Telegram.Login.auth(
+        { bot_id: "7460472127", request_access: true },
+        (data: string) => {
+          console.log(data, "data");
+        },
+      )
+    }
+  }
+
   return (
     <Providers>
       <div
@@ -54,7 +76,7 @@ function App() {
 
         <ConnectButton />
       </div>
-
+<button onClick={handleTelegramWidgetLogin}>tg</button>
       <div
         style={{
           display: "flex",
