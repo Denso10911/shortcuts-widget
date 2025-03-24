@@ -1,4 +1,4 @@
-import React, {ComponentProps, useEffect, useMemo} from "react";
+import React, {ComponentProps, useMemo} from "react";
 import {useLocation} from "react-router-dom";
 import Providers from "@/components/Providers";
 import { isAddress } from "viem";
@@ -10,17 +10,6 @@ import logoUrl from "./logo_black_white.png";
 import "@rainbow-me/rainbowkit/styles.css";
 import useProjectInfo from "@/hooks/useProjectInfo";
 // import "./App.css";
-declare global {
-  interface Window {
-    Telegram: any
-    TWidgetLogin: {
-      auth: () => void
-    }
-    TelegramLoginWidget: {
-      dataOnauth: (user: any) => void
-    }
-  }
-}
 
 const EnsoApiKey = import.meta.env.VITE_ENSO_API_KEY;
 
@@ -48,49 +37,6 @@ function App() {
     return props;
   }, [location]);
 
-  const handleTelegramWidgetLogin = () => {
-    if (typeof window !== "undefined") {
-      window.Telegram.Login.auth(
-        { bot_id: "7460472127", request_access: true },
-        (data: string) => {
-          console.log(data, "data");
-        },
-      )
-    }
-  }
-
-  useEffect(() => {
-    const script = document.createElement("script")
-    script.src = "https://telegram.org/js/telegram-web-app.js?56"
-    script.defer = true
-    document.body.appendChild(script)
-
-    return () => {
-      document.body.removeChild(script)
-    }
-  }, [])
-
-  useEffect(() => {
-    const script = document.createElement("script")
-    script.src = "https://telegram.org/js/telegram-widget.js"
-    script.defer = true
-    document.body.appendChild(script)
-
-    return () => {
-      document.body.removeChild(script)
-    }
-  }, [])
-  useEffect(() => {
-    const script = document.createElement("script")
-    script.src = "https://telegram.org/js/widget-frame.js?63"
-    script.defer = true
-    document.body.appendChild(script)
-
-    return () => {
-      document.body.removeChild(script)
-    }
-  }, [])
-
   return (
     <Providers>
       <div
@@ -108,7 +54,6 @@ function App() {
 
         <ConnectButton />
       </div>
-<button onClick={handleTelegramWidgetLogin}>tg</button>
       <div
         style={{
           display: "flex",
